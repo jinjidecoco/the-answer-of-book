@@ -20,7 +20,11 @@ const _sfc_main = {
       content: "加载中...",
       author: ""
     });
+    const isCountingDown = common_vendor.ref(false);
+    const countdownValue = common_vendor.ref(3);
+    const countdownProgress = common_vendor.ref(0);
     let pressTimer = null;
+    let countdownTimer = null;
     const openBook = () => {
       isBookOpen.value = true;
     };
@@ -28,8 +32,37 @@ const _sfc_main = {
       isTotemVisible.value = true;
       pageHint.value = "长按图腾3秒钟寻找答案";
     };
+    const startTotemPress = () => {
+      isCountingDown.value = true;
+      countdownValue.value = 3;
+      countdownProgress.value = 0;
+      let startTime = Date.now();
+      let elapsed = 0;
+      countdownTimer = setInterval(() => {
+        elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / pressTime, 1);
+        countdownProgress.value = progress;
+        const timeLeft = Math.ceil(3 - 3 * progress);
+        if (timeLeft !== countdownValue.value) {
+          countdownValue.value = timeLeft;
+        }
+        if (progress >= 1) {
+          clearInterval(countdownTimer);
+          activateTotem();
+        }
+      }, 50);
+    };
+    const endTotemPress = () => {
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+      isCountingDown.value = false;
+      countdownProgress.value = 0;
+    };
     const activateTotem = () => {
       isTotemActive.value = true;
+      isCountingDown.value = false;
       pageHint.value = "正在寻找你的答案...";
       setTimeout(() => {
         common_vendor.index.navigateTo({
@@ -40,7 +73,7 @@ const _sfc_main = {
           isTotemVisible.value = false;
           pageHint.value = '点击"寻找答案"开始';
         }, 500);
-      }, pressTime);
+      }, 500);
     };
     const handleTouchStart = () => {
       if (!isBookOpen.value) {
@@ -102,24 +135,31 @@ const _sfc_main = {
         c: common_vendor.o(showTotem)
       } : {}, {
         d: isTotemVisible.value
-      }, isTotemVisible.value ? {
+      }, isTotemVisible.value ? common_vendor.e({
         e: common_assets._imports_0,
-        f: isTotemActive.value ? 1 : "",
-        g: common_vendor.o(activateTotem)
+        f: isCountingDown.value
+      }, isCountingDown.value ? {
+        g: common_vendor.t(countdownValue.value),
+        h: `scale(${countdownProgress.value})`
       } : {}, {
-        h: isBookOpen.value ? 1 : "",
-        i: common_vendor.o(handleTouchStart),
-        j: common_vendor.o(handleTouchEnd),
-        k: common_vendor.t(dailyQuote.value.content),
-        l: dailyQuote.value.author
+        i: isTotemActive.value ? 1 : "",
+        j: common_vendor.o(startTotemPress),
+        k: common_vendor.o(endTotemPress),
+        l: common_vendor.o(endTotemPress)
+      }) : {}, {
+        m: isBookOpen.value ? 1 : "",
+        n: common_vendor.o(handleTouchStart),
+        o: common_vendor.o(handleTouchEnd),
+        p: common_vendor.t(dailyQuote.value.content),
+        q: dailyQuote.value.author
       }, dailyQuote.value.author ? {
-        m: common_vendor.t(dailyQuote.value.author)
+        r: common_vendor.t(dailyQuote.value.author)
       } : {}, {
-        n: common_vendor.o(navigateToDaily),
-        o: common_vendor.o(showHelp),
-        p: common_vendor.o(($event) => isHelpVisible.value = $event),
-        q: common_vendor.o(($event) => isHelpVisible.value = false),
-        r: common_vendor.p({
+        s: common_vendor.o(navigateToDaily),
+        t: common_vendor.o(showHelp),
+        v: common_vendor.o(($event) => isHelpVisible.value = $event),
+        w: common_vendor.o(($event) => isHelpVisible.value = false),
+        x: common_vendor.p({
           title: "使用帮助",
           visible: isHelpVisible.value
         })

@@ -11,8 +11,12 @@
           <view class="find-answer-btn" v-if="!isTotemVisible" @click="showTotem">
             <text>寻找答案</text>
           </view>
-          <view class="totem" v-if="isTotemVisible" :class="{ 'totem-active': isTotemActive }" @longpress="activateTotem">
+          <view class="totem" v-if="isTotemVisible" :class="{ 'totem-active': isTotemActive }" @touchstart="startTotemPress" @touchend="endTotemPress" @touchcancel="endTotemPress">
             <image class="totem-image" src="/static/images/totem.svg" mode="aspectFit"></image>
+            <view class="countdown-circle" v-if="isCountingDown">
+              <view class="countdown-timer">{{ countdownValue }}</view>
+              <view class="countdown-progress" :style="{ transform: `scale(${countdownProgress})` }"></view>
+            </view>
           </view>
         </view>
       </view>
@@ -62,8 +66,14 @@ const dailyQuote = ref({
   author: ''
 });
 
+// 倒计时状态
+const isCountingDown = ref(false);
+const countdownValue = ref(3);
+const countdownProgress = ref(0);
+
 // 长按计时器
 let pressTimer = null;
+let countdownTimer = null;
 const pressTime = 3000; // 3秒长按时间
 
 // 打开书本
@@ -77,9 +87,52 @@ const showTotem = () => {
   pageHint.value = '长按图腾3秒钟寻找答案';
 };
 
-// 长按图腾
+// 开始长按图腾
+const startTotemPress = () => {
+  isCountingDown.value = true;
+  countdownValue.value = 3;
+  countdownProgress.value = 0;
+
+  // 启动倒计时
+  let startTime = Date.now();
+  let elapsed = 0;
+
+  // 创建倒计时动画
+  countdownTimer = setInterval(() => {
+    elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / pressTime, 1);
+    countdownProgress.value = progress;
+
+    // 更新倒计时数字
+    const timeLeft = Math.ceil(3 - 3 * progress);
+    if (timeLeft !== countdownValue.value) {
+      countdownValue.value = timeLeft;
+    }
+
+    // 完成倒计时
+    if (progress >= 1) {
+      clearInterval(countdownTimer);
+      activateTotem();
+    }
+  }, 50);
+};
+
+// 结束长按图腾
+const endTotemPress = () => {
+  if (countdownTimer) {
+    clearInterval(countdownTimer);
+    countdownTimer = null;
+  }
+
+  // 重置倒计时状态
+  isCountingDown.value = false;
+  countdownProgress.value = 0;
+};
+
+// 激活图腾
 const activateTotem = () => {
   isTotemActive.value = true;
+  isCountingDown.value = false;
   pageHint.value = '正在寻找你的答案...';
 
   setTimeout(() => {
@@ -93,7 +146,7 @@ const activateTotem = () => {
       isTotemVisible.value = false;
       pageHint.value = '点击"寻找答案"开始';
     }, 500);
-  }, pressTime);
+  }, 500);
 };
 
 // 触摸开始
@@ -327,6 +380,7 @@ defineExpose({
   background: rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
   margin-top: 30rpx;
+  position: relative;
 }
 
 .totem-active {
@@ -337,6 +391,37 @@ defineExpose({
 .totem-image {
   width: 150rpx;
   height: 150rpx;
+  z-index: 1;
+}
+
+.countdown-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.countdown-timer {
+  font-size: 60rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+  z-index: 3;
+  text-shadow: 0 2rpx 4rpx rgba(255, 255, 255, 0.6);
+}
+
+.countdown-progress {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  opacity: 0.3;
+  transform-origin: center;
+  z-index: 2;
 }
 
 .daily-quote {

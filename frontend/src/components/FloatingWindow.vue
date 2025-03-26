@@ -1,11 +1,15 @@
 <template>
-  <view class="floating-window" :class="{ 'show': isVisible }" :style="positionStyle">
-    <view class="floating-window-header">
-      <text class="floating-window-title">{{ title }}</text>
-      <view class="floating-window-close" @click="close">×</view>
-    </view>
-    <view class="floating-window-content">
-      <slot></slot>
+  <view class="floating-window-overlay" :class="{ 'show': isVisible }" @click.stop="closeOnOverlay">
+    <view class="floating-window" :class="{ 'show': isVisible }" :style="positionStyle" @click.stop>
+      <view class="floating-window-header">
+        <text class="floating-window-title">{{ title }}</text>
+        <view class="floating-window-close" @click="close">
+          <text class="close-icon">×</text>
+        </view>
+      </view>
+      <view class="floating-window-content">
+        <slot></slot>
+      </view>
     </view>
   </view>
 </template>
@@ -26,6 +30,10 @@ const props = defineProps({
   position: {
     type: Object,
     default: () => ({ top: '50%', left: '50%' })
+  },
+  closeOnBackdrop: {
+    type: Boolean,
+    default: true
   }
 });
 
@@ -47,6 +55,13 @@ const positionStyle = computed(() => {
   };
 });
 
+// 点击背景关闭窗口
+const closeOnOverlay = (e) => {
+  if (props.closeOnBackdrop) {
+    close();
+  }
+};
+
 // 关闭窗口
 const close = () => {
   isVisible.value = false;
@@ -55,18 +70,38 @@ const close = () => {
 </script>
 
 <style>
+.floating-window-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.floating-window-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .floating-window {
   position: fixed;
   z-index: 999;
-  min-width: 300rpx;
-  max-width: 600rpx;
-  background: rgba(255, 255, 255, 0.9);
+  width: 85%;
+  max-width: 650rpx;
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-radius: 20rpx;
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.2);
+  border-radius: 24rpx;
+  box-shadow: 0 20rpx 40rpx rgba(0, 0, 0, 0.2);
+  overflow: hidden;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
-  transition: all 0.3s ease;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
   pointer-events: none;
 }
 
@@ -80,29 +115,45 @@ const close = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20rpx 30rpx;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 28rpx 30rpx;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 }
 
 .floating-window-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .floating-window-close {
-  font-size: 40rpx;
-  color: #999;
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  height: 40rpx;
-  width: 40rpx;
-  line-height: 36rpx;
-  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.floating-window-close:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
+.close-icon {
+  color: #fff;
+  font-size: 36rpx;
+  line-height: 1;
+  font-weight: 300;
 }
 
 .floating-window-content {
   padding: 30rpx;
-  max-height: 60vh;
+  max-height: 65vh;
   overflow-y: auto;
 }
 </style>

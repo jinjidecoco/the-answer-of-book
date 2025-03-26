@@ -14,6 +14,10 @@ const _sfc_main = {
     position: {
       type: Object,
       default: () => ({ top: "50%", left: "50%" })
+    },
+    closeOnBackdrop: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ["update:visible", "close"],
@@ -31,6 +35,11 @@ const _sfc_main = {
         transform: "translate(-50%, -50%)"
       };
     });
+    const closeOnOverlay = (e) => {
+      if (props.closeOnBackdrop) {
+        close();
+      }
+    };
     const close = () => {
       isVisible.value = false;
       emit("close");
@@ -40,7 +49,11 @@ const _sfc_main = {
         a: common_vendor.t(__props.title),
         b: common_vendor.o(close),
         c: isVisible.value ? 1 : "",
-        d: common_vendor.s(positionStyle.value)
+        d: common_vendor.s(positionStyle.value),
+        e: common_vendor.o(() => {
+        }),
+        f: isVisible.value ? 1 : "",
+        g: common_vendor.o(closeOnOverlay)
       };
     };
   }

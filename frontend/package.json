@@ -1,0 +1,41 @@
+{
+  "name": "answer-book-miniprogram",
+  "version": "1.0.0",
+  "description": "答案之书小程序前端项目",
+  "main": "index.js",
+  "scripts": {
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "答案之书",
+    "小程序",
+    "uniapp",
+    "vue3"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dcloudio/uni-app": "^3.0.0",
+    "@dcloudio/uni-app-plus": "^3.0.0",
+    "@dcloudio/uni-components": "^3.0.0",
+    "@dcloudio/uni-h5": "^3.0.0",
+    "@dcloudio/uni-mp-weixin": "^3.0.0",
+    "animate.css": "^4.1.1",
+    "pinia": "^2.0.33",
+    "uview-ui": "^2.0.36",
+    "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.0.7",
+    "@dcloudio/uni-automator": "^3.0.0",
+    "@dcloudio/uni-cli-shared": "^3.0.0",
+    "@dcloudio/vite-plugin-uni": "^3.0.0",
+    "@vue/compiler-sfc": "^3.2.45",
+    "sass": "^1.58.3",
+    "sass-loader": "^13.2.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
+  }
+}

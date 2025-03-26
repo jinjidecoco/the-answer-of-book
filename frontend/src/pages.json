@@ -1,0 +1,69 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "答案之书",
+        "navigationStyle": "custom",
+        "app-plus": {
+          "bounce": "none",
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/answer/index",
+      "style": {
+        "navigationBarTitleText": "答案",
+        "navigationStyle": "custom",
+        "app-plus": {
+          "bounce": "none",
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/daily/index",
+      "style": {
+        "navigationBarTitleText": "每日一言",
+        "navigationStyle": "custom",
+        "app-plus": {
+          "bounce": "none",
+          "titleNView": false
+        }
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "答案之书",
+    "navigationBarBackgroundColor": "#1a2a6c",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#1a2a6c",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/tabbar/home.png",
+        "selectedIconPath": "static/images/tabbar/home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/daily/index",
+        "iconPath": "static/images/tabbar/daily.png",
+        "selectedIconPath": "static/images/tabbar/daily-active.png",
+        "text": "每日一言"
+      }
+    ]
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^u-(.*)":"uview-ui/components/u-$1/u-$1.vue"
+    }
+  }
+}

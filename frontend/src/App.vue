@@ -1,3 +1,11 @@
+<!--
+ * @Author: jinjidecoco 18895627215@163.com
+ * @Date: 2025-03-25 23:52:59
+ * @LastEditors: jinjidecoco 18895627215@163.com
+ * @LastEditTime: 2025-03-26 17:44:35
+ * @FilePath: /answer/frontend/src/App.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <script setup>
 // App.vue作为应用入口
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
@@ -21,8 +29,18 @@ onHide(() => {
 const initTheme = () => {
   // 从本地存储获取主题设置
   const savedTheme = uni.getStorageSync('theme') || 'default';
-  // 设置文档主题属性
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  // 设置导航栏样式
+  uni.setNavigationBarColor({
+    frontColor: savedTheme === 'dark' ? '#ffffff' : '#000000',
+    backgroundColor: savedTheme === 'dark' ? '#121212' : '#f8f9fa'
+  });
+  // 获取系统主题
+  uni.getSystemInfo({
+    success: (res) => {
+      const theme = res.theme || savedTheme;
+      uni.setStorageSync('theme', theme);
+    }
+  });
 };
 </script>
 
@@ -30,12 +48,7 @@ const initTheme = () => {
 /* 导入主题样式 */
 @import './static/css/theme.css';
 
-/* 全局样式 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 /* 页面容器 */
 page {

@@ -1,0 +1,1 @@
+<view class="{{['floating-window', c && 'show']}}" style="{{d}}"><view class="floating-window-header"><text class="floating-window-title">{{a}}</text><view class="floating-window-close" bindtap="{{b}}">×</view></view><view class="floating-window-content"><slot></slot></view></view>

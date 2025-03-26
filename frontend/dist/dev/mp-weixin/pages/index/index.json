@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "答案之书",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "theme-switcher": "../../components/ThemeSwitcher",
+    "floating-window": "../../components/FloatingWindow",
+    "quick-help": "../../components/QuickHelp"
+  }
+}

@@ -1,0 +1,47 @@
+
+.floating-window {
+  position: fixed;
+  z-index: 999;
+  min-width: 300rpx;
+  max-width: 600rpx;
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.floating-window.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+.floating-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.floating-window-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+.floating-window-close {
+  font-size: 40rpx;
+  color: #999;
+  cursor: pointer;
+  height: 40rpx;
+  width: 40rpx;
+  line-height: 36rpx;
+  text-align: center;
+}
+.floating-window-content {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}

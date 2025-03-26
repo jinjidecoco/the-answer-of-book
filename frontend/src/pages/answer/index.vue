@@ -101,15 +101,25 @@ const fetchRandomAnswer = () => {
 
 // 再试一次
 const tryAgain = () => {
+  // 重置翻页状态
+  isPageFlipped.value = false;
+  // 获取新答案
   fetchRandomAnswer();
 };
 
 // 分享答案
 const shareAnswer = () => {
-  // 实际项目中应该调用分享API
+  // 显示分享菜单
   uni.showShareMenu({
     withShareTicket: true,
     menus: ['shareAppMessage', 'shareTimeline']
+  });
+
+  // 生成分享海报（实际项目中可以调用绘图API生成海报）
+  uni.showToast({
+    title: '已生成分享海报',
+    icon: 'success',
+    duration: 2000
   });
 };
 
@@ -118,7 +128,22 @@ uni.onShareAppMessage(() => {
   return {
     title: `答案之书告诉我：${answer.value.content}`,
     path: `/pages/index/index`,
-    imageUrl: '/static/images/share-image.png' // 分享图片
+    imageUrl: '/static/images/share-image.png', // 分享图片
+    success: function() {
+      uni.showToast({
+        title: '分享成功',
+        icon: 'success'
+      });
+    }
+  };
+});
+
+// 定义分享到朋友圈
+uni.onShareTimeline(() => {
+  return {
+    title: `答案之书告诉我：${answer.value.content}`,
+    query: '',
+    imageUrl: '/static/images/share-image.png'
   };
 });
 </script>

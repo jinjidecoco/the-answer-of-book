@@ -7,8 +7,11 @@
           <text class="book-subtitle">The Book of Answers</text>
         </view>
         <view class="book-page">
-          <text class="page-hint">长按图腾寻找答案</text>
-          <view class="totem" :class="{ 'totem-active': isTotemActive }" @longpress="activateTotem">
+          <text class="page-hint">{{ pageHint }}</text>
+          <view class="find-answer-btn" v-if="!isTotemVisible" @click="showTotem">
+            <text>寻找答案</text>
+          </view>
+          <view class="totem" v-if="isTotemVisible" :class="{ 'totem-active': isTotemActive }" @longpress="activateTotem">
             <image class="totem-image" src="/static/images/totem.png" mode="aspectFit"></image>
           </view>
         </view>
@@ -18,21 +21,22 @@
       <text class="daily-quote-text">{{ dailyQuote.content }}</text>
       <text class="daily-quote-author" v-if="dailyQuote.author">—— {{ dailyQuote.author }}</text>
     </view>
-    
+
     <!-- 帮助按钮 -->
     <view class="help-button" @click="showHelp">
       <text class="help-icon">?</text>
     </view>
-    
+
     <!-- 主题切换组件 -->
     <ThemeSwitcher />
-    
+
     <!-- 帮助悬浮窗 -->
-    <FloatingWindow 
-      title="使用帮助" 
-      :visible="isHelpVisible" 
+    <FloatingWindow
+      title="使用帮助"
+      :visible="isHelpVisible"
       @update:visible="isHelpVisible = $event"
-      @close="isHelpVisible = false">
+      @close="isHelpVisible = false"
+    >
       <QuickHelp />
     </FloatingWindow>
   </view>
@@ -49,8 +53,10 @@ import QuickHelp from '@/components/QuickHelp.vue';
 
 // 状态变量
 const isBookOpen = ref(false);
+const isTotemVisible = ref(false);
 const isTotemActive = ref(false);
 const isHelpVisible = ref(false);
+const pageHint = ref('点击"寻找答案"开始');
 const dailyQuote = ref({
   content: '加载中...',
   author: ''
@@ -65,9 +71,17 @@ const openBook = () => {
   isBookOpen.value = true;
 };
 
+// 显示图腾
+const showTotem = () => {
+  isTotemVisible.value = true;
+  pageHint.value = '长按图腾3秒钟寻找答案';
+};
+
 // 长按图腾
 const activateTotem = () => {
   isTotemActive.value = true;
+  pageHint.value = '正在寻找你的答案...';
+
   setTimeout(() => {
     // 跳转到答案页
     uni.navigateTo({
@@ -76,6 +90,8 @@ const activateTotem = () => {
     // 重置状态
     setTimeout(() => {
       isTotemActive.value = false;
+      isTotemVisible.value = false;
+      pageHint.value = '点击"寻找答案"开始';
     }, 500);
   }, pressTime);
 };
@@ -150,8 +166,10 @@ onMounted(() => {
 
 // 每次显示页面时
 onShow(() => {
-  // 重置图腾状态
+  // 重置所有状态
   isTotemActive.value = false;
+  isTotemVisible.value = false;
+  pageHint.value = '点击"寻找答案"开始';
 });
 </script>
 
@@ -265,6 +283,27 @@ onShow(() => {
   margin-bottom: 40rpx;
 }
 
+.find-answer-btn {
+  padding: 20rpx 40rpx;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  border-radius: 50rpx;
+  box-shadow: 0 5rpx 15rpx rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  margin-top: 30rpx;
+}
+
+.find-answer-btn text {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.find-answer-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.2);
+}
+
 .totem {
   width: 200rpx;
   height: 200rpx;
@@ -274,6 +313,7 @@ onShow(() => {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
+  margin-top: 30rpx;
 }
 
 .totem-active {

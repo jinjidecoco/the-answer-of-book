@@ -4,8 +4,8 @@
       <view class="theme-icon" :class="currentTheme"></view>
     </view>
     <view class="theme-panel" v-if="isPanelVisible">
-      <view class="theme-option" 
-            v-for="theme in themes" 
+      <view class="theme-option"
+            v-for="theme in themes"
             :key="theme.name"
             :class="{ 'active': currentTheme === theme.name }"
             @click="selectTheme(theme.name)">
@@ -19,13 +19,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-// 主题列表
+// 主题列表 - 简化为只有默认和暗黑两种主题
 const themes = [
   { name: 'default', label: '默认', primaryColor: '#1a2a6c' },
-  { name: 'dark', label: '暗黑', primaryColor: '#121212' },
-  { name: 'light', label: '明亮', primaryColor: '#f8f9fa' },
-  { name: 'purple', label: '紫色', primaryColor: '#6f42c1' },
-  { name: 'green', label: '绿色', primaryColor: '#28a745' }
+  { name: 'dark', label: '暗黑', primaryColor: '#121212' }
 ];
 
 // 面板显示状态
@@ -44,7 +41,7 @@ const selectTheme = (themeName) => {
   currentTheme.value = themeName;
   applyTheme(themeName);
   isPanelVisible.value = false;
-  
+
   // 保存主题设置到本地存储
   uni.setStorageSync('theme', themeName);
 };
@@ -54,22 +51,20 @@ const applyTheme = (themeName) => {
   // 获取选中的主题
   const theme = themes.find(t => t.name === themeName);
   if (!theme) return;
-  
-  // 设置CSS变量
-  document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
-  
+
   // 根据主题设置状态栏样式
-  if (themeName === 'dark') {
-    uni.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#121212'
-    });
-  } else {
-    uni.setNavigationBarColor({
-      frontColor: '#000000',
-      backgroundColor: theme.primaryColor
-    });
-  }
+  uni.setNavigationBarColor({
+    frontColor: themeName === 'dark' ? '#ffffff' : '#000000',
+    backgroundColor: themeName === 'dark' ? '#121212' : theme.primaryColor
+  });
+
+  // 获取系统主题
+  uni.getSystemInfo({
+    success: (res) => {
+      const systemTheme = res.theme || themeName;
+      uni.setStorageSync('theme', systemTheme);
+    }
+  })
 };
 
 // 组件挂载时初始化主题
@@ -121,18 +116,7 @@ onMounted(() => {
   border: 2rpx solid #444;
 }
 
-.theme-icon.light {
-  background: #f8f9fa;
-  border: 2rpx solid #ddd;
-}
-
-.theme-icon.purple {
-  background: #6f42c1;
-}
-
-.theme-icon.green {
-  background: #28a745;
-}
+/* 只保留默认和暗黑主题图标 */
 
 .theme-panel {
   position: absolute;

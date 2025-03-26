@@ -8,27 +8,36 @@
       </view>
       <view class="help-item">
         <text class="help-step">2. </text>
-        <text class="help-text">长按图腾3秒钟，等待图腾旋转</text>
+        <text class="help-text">点击"寻找答案"按钮</text>
       </view>
       <view class="help-item">
         <text class="help-step">3. </text>
-        <text class="help-text">系统将随机生成一个答案</text>
+        <text class="help-text">长按图腾3秒钟，等待图腾旋转</text>
       </view>
       <view class="help-item">
         <text class="help-step">4. </text>
-        <text class="help-text">点击"再试一次"可以重新获取答案</text>
+        <text class="help-text">系统将随机生成一个答案</text>
       </view>
       <view class="help-item">
         <text class="help-step">5. </text>
+        <text class="help-text">点击"再试一次"可以重新获取答案</text>
+      </view>
+      <view class="help-item">
+        <text class="help-step">6. </text>
         <text class="help-text">点击"分享"可以将答案分享给好友</text>
       </view>
+
+      <view class="help-image-container">
+        <image class="help-totem-image" src="/static/images/totem.png" mode="aspectFit"></image>
+        <text class="help-image-caption">图腾示例</text>
+      </view>
     </view>
-    
+
     <view class="help-section">
       <text class="help-title">主题切换</text>
-      <text class="help-text">点击右下角的主题按钮，可以切换不同的主题风格。</text>
+      <text class="help-text">点击右下角的主题按钮，可以在默认和暗黑两种主题风格之间切换。</text>
     </view>
-    
+
     <view class="help-section">
       <text class="help-title">每日一言</text>
       <text class="help-text">点击首页底部的每日一言，可以查看今日推荐的哲理语录。</text>
@@ -72,5 +81,25 @@
   font-size: var(--font-size-normal);
   color: var(--text-color);
   line-height: 1.5;
+}
+
+.help-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.help-totem-image {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 10rpx;
+}
+
+.help-image-caption {
+  font-size: var(--font-size-small);
+  color: var(--secondary-color);
+  text-align: center;
 }
 </style>

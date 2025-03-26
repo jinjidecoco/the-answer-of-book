@@ -28,7 +28,7 @@
       </view>
 
       <view class="help-image-container">
-        <image class="help-totem-image" src="/static/images/totem.png" mode="aspectFit"></image>
+        <image class="help-totem-image" src="/static/images/totem.svg" mode="aspectFit"></image>
         <text class="help-image-caption">图腾示例</text>
       </view>
     </view>

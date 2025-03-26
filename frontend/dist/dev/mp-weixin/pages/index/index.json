@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "答案之书",
   "navigationStyle": "custom",
+  "enableShareAppMessage": true,
   "usingComponents": {
     "theme-switcher": "../../components/ThemeSwitcher",
     "floating-window": "../../components/FloatingWindow",

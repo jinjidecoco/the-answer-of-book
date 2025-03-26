@@ -12,7 +12,7 @@
             <text>寻找答案</text>
           </view>
           <view class="totem" v-if="isTotemVisible" :class="{ 'totem-active': isTotemActive }" @longpress="activateTotem">
-            <image class="totem-image" src="/static/images/totem.png" mode="aspectFit"></image>
+            <image class="totem-image" src="/static/images/totem.svg" mode="aspectFit"></image>
           </view>
         </view>
       </view>
@@ -133,7 +133,7 @@ const fetchDailyQuote = () => {
     { content: '生活中最重要的不是你所处的位置，而是你所朝的方向。', author: '奥利弗·温德尔·霍姆斯' },
     { content: '不要等待机会，而要创造机会。', author: '林肯' },
     { content: '人生就像骑自行车，为了保持平衡，你必须保持运动。', author: '爱因斯坦' },
-    { content: '世上只有一种英雄主义，就是在认清生活真相之后依然热爱生活。', author: '罗曼·罗兰' },
+    { content: '世上只有一种英雄主义，就是在recognize life truth之后依然热爱生活。', author: '罗曼·罗兰' },
     { content: '如果你不给自己烦恼，别人也永远不可能给你烦恼。', author: '佚名' }
   ];
 
@@ -170,6 +170,19 @@ onShow(() => {
   isTotemActive.value = false;
   isTotemVisible.value = false;
   pageHint.value = '点击"寻找答案"开始';
+});
+
+// 分享功能
+const onShareAppMessage = () => {
+  return {
+    title: '答案之书 - 揭示你的命运',
+    path: '/pages/index/index'
+  };
+};
+
+// 显式地将方法暴露给模板
+defineExpose({
+  onShareAppMessage
 });
 </script>
 

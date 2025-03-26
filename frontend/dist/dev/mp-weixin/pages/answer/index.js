@@ -52,7 +52,7 @@ const _sfc_main = {
         duration: 2e3
       });
     };
-    common_vendor.index.onShareAppMessage(() => {
+    onShareAppMessage(() => {
       return {
         title: `答案之书告诉我：${answer.value.content}`,
         path: `/pages/index/index`,

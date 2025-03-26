@@ -124,7 +124,7 @@ const shareAnswer = () => {
 };
 
 // 定义分享内容
-uni.onShareAppMessage(() => {
+onShareAppMessage(() => {
   return {
     title: `答案之书告诉我：${answer.value.content}`,
     path: `/pages/index/index`,

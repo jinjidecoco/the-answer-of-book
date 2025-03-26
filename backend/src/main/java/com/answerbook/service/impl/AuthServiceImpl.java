@@ -46,8 +46,8 @@ public class AuthServiceImpl implements AuthService {
             userMapper.updateById(user);
         }
 
-        // 生成token
-        String token = jwtUtil.generateToken(user.getId());
+        // 生成token - 将Long类型转换为String
+        String token = jwtUtil.generateToken(String.valueOf(user.getId()));
 
         // 构建返回对象
         LoginVO loginVO = new LoginVO();

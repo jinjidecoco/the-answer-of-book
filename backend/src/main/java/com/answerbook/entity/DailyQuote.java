@@ -8,22 +8,23 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
- * 每日一言实体类
+ * 每日引用实体类
  */
 @Data
-@TableName("t_daily_quote")
+@TableName("daily_quote")
 public class DailyQuote {
 
     /**
-     * 语录ID
+     * 主键ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
-     * 语录内容
+     * 引用内容
      */
     private String content;
 
@@ -55,12 +56,12 @@ public class DailyQuote {
     /**
      * 创建时间
      */
-    private LocalDateTime createdAt;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updatedAt;
+    private Date updateTime;
 
     /**
      * 是否删除：0否，1是

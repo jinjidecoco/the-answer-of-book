@@ -81,3 +81,4 @@ public class FavoriteController {
         result.put("favorited", favorited);
         return Result.success(result);
     }
+}

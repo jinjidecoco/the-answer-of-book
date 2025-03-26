@@ -15,12 +15,13 @@
     <description>答案之书小程序后端</description>
     <properties>
         <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <mysql.version>8.0.33</mysql.version>
         <druid.version>1.2.16</druid.version>
         <jwt.version>0.9.1</jwt.version>
         <hutool.version>5.8.20</hutool.version>
-        <knife4j.version>4.1.0</knife4j.version>
         <flyway.version>9.16.3</flyway.version>
     </properties>
 
@@ -99,13 +100,6 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- API文档依赖 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
-
         <!-- 测试依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -148,3 +142,4 @@
             </plugin>
         </plugins>
     </build>
+</project>

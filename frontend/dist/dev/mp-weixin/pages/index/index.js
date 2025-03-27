@@ -101,8 +101,14 @@ const _sfc_main = {
         { content: "生活中最重要的不是你所处的位置，而是你所朝的方向。", author: "奥利弗·温德尔·霍姆斯" },
         { content: "不要等待机会，而要创造机会。", author: "林肯" },
         { content: "人生就像骑自行车，为了保持平衡，你必须保持运动。", author: "爱因斯坦" },
-        { content: "世上只有一种英雄主义，就是在recognize life truth之后依然热爱生活。", author: "罗曼·罗兰" },
-        { content: "如果你不给自己烦恼，别人也永远不可能给你烦恼。", author: "佚名" }
+        { content: "世上只有一种英雄主义，就是在认清生活真相之后依然热爱生活。", author: "罗曼·罗兰" },
+        { content: "如果你不给自己烦恼，别人也永远不可能给你烦恼。", author: "佚名" },
+        { content: "不要为明天忧虑，因为明天自有明天的忧虑。", author: "马太福音" },
+        { content: "生命就像一盒巧克力，你永远不知道下一块是什么。", author: "阿甘·艾克森" },
+        { content: "生命中最宝贵的不是时间，而是生命本身。", author: "亚里士多德" },
+        { content: "生命的意义在于体验，而不是等待结果。", author: "约翰·冯·诺依曼" },
+        { content: "生命就像一把刀，用它来切割一切。", author: "Anonymous" },
+        { content: "生命的意义在于享受，而不是等待。", author: "Anonymous" }
       ];
       const randomIndex = Math.floor(Math.random() * quotes.length);
       dailyQuote.value = quotes[randomIndex];

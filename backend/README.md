@@ -95,6 +95,7 @@ mvn clean compile
 mvn spring-boot:run
 ```
 
+
 ### 打包部署
 
 ```bash
@@ -114,3 +115,131 @@ docker-compose up -d
 2. 敏感信息（如数据库密码）使用环境变量或配置中心管理
 3. 定期备份数据库
 4. API接口需要做好限流和安全防护
+
+
+我将为您创建一个admin用户，密码为123456。
+
+```java:backend/src/main/java/com/answerbook/config/SecurityConfig.java
+package com.answerbook.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+/**
+ * 安全配置类
+ */
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/swagger-ui/**", "/api-docs/**", "/mock/**", "/h2-console/**", "/auth/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .and()
+            .httpBasic()
+                .and()
+            .csrf().disable()
+            .headers().frameOptions().disable(); // 允许H2控制台使用iframe
+
+        return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails adminUser = User.builder()
+                .username("admin")
+                .password(passwordEncoder().encode("123456"))
+                .roles("ADMIN")
+                .build();
+
+        UserDetails testUser = User.builder()
+                .username("user")
+                .password(passwordEncoder().encode("password"))
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(adminUser, testUser);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+```
+
+```bash
+cd backend && mvn spring-boot:run
+```
+
+```bash
+mvn spring-boot:run
+```
+
+```bash
+lsof -i :8088 | grep LISTEN
+```
+
+```bash
+kill 9830
+```
+
+```bash
+lsof -i :8088 | grep LISTEN
+```
+
+```bash
+mvn spring-boot:run
+```
+
+
+
+## 后端服务访问信息
+
+1. **后端服务地址**:
+   - 基础URL: http://localhost:8088/api
+
+2. **账号信息**:
+   - 管理员账号:
+     - 用户名: **admin**
+     - 密码: **123456**
+     - 权限: ADMIN角色，可访问所有API
+
+   - 普通用户账号:
+     - 用户名: **user**
+     - 密码: **password**
+     - 权限: USER角色，访问权限受限
+
+3. **API文档**:
+   - Swagger UI: http://localhost:8088/api/swagger-ui.html
+   - OpenAPI JSON: http://localhost:8088/api/api-docs
+
+4. **公开API路径**:
+   - 无需认证即可访问: `/swagger-ui/**`, `/api-docs/**`, `/mock/**`, `/h2-console/**`, `/auth/**`
+   - 需要ADMIN角色: `/admin/**`
+   - 其他API需要登录认证
+
+5. **数据库控制台**:
+   - H2控制台: http://localhost:8088/api/h2-console
+   - JDBC URL: jdbc:h2:mem:answerbook
+   - 用户名: sa
+   - 密码: (留空)
+
+
+image.png
+

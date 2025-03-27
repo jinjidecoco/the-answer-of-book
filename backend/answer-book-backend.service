@@ -1,0 +1,18 @@
+[Unit]
+Description=Answer Book Backend Service
+After=syslog.target network.target
+
+[Service]
+User=answerbook
+Group=answerbook
+WorkingDirectory=/opt/answer-book/backend
+ExecStart=/usr/bin/java -jar /opt/answer-book/backend/answer-book-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+SuccessExitStatus=143
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=answer-book-backend
+
+[Install]
+WantedBy=multi-user.target

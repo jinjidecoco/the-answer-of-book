@@ -9,6 +9,7 @@
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   padding: 30rpx;
+  position: relative;
 }
 @keyframes gradient {
 0% { background-position: 0% 50%;
@@ -29,12 +30,19 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 40rpx;
+  min-height: 300rpx;
+  transition: all 0.3s ease;
+}
+.quote-card.loading {
+  background: rgba(255, 255, 255, 0.1);
 }
 .quote-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 30rpx;
+  min-height: 200rpx;
+  justify-content: center;
 }
 .quote-text {
   font-size: 36rpx;
@@ -93,6 +101,10 @@
   transform: scale(0.95);
   box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.2);
 }
+.action-button[disabled] {
+  opacity: 0.5;
+  transform: none;
+}
 .refresh {
   background: linear-gradient(45deg, #3498db, #2980b9);
 }
@@ -110,4 +122,25 @@
 .back-text {
   font-size: 28rpx;
   color: white;
+}
+.error-toast {
+  position: fixed;
+  top: 80rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20rpx 40rpx;
+  border-radius: 10rpx;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+.error-text {
+  color: #fff;
+  font-size: 28rpx;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translate(-50%, -20rpx);
+}
+to { opacity: 1; transform: translate(-50%, 0);
+}
 }

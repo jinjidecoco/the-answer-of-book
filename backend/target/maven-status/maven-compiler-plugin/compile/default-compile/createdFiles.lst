@@ -11,9 +11,11 @@ com/answerbook/common/Result.class
 com/answerbook/service/FavoriteService.class
 com/answerbook/service/AnswerService.class
 com/answerbook/AnswerBookApplication.class
+com/answerbook/vo/QuoteVO.class
 com/answerbook/controller/DailyQuoteController.class
 com/answerbook/controller/AnswerController.class
 com/answerbook/entity/User.class
+com/answerbook/config/OpenApiConfig.class
 com/answerbook/mapper/DailyQuoteMapper.class
 com/answerbook/entity/Favorite.class
 com/answerbook/entity/Answer.class
@@ -27,6 +29,8 @@ com/answerbook/vo/DailyQuoteVO.class
 com/answerbook/service/impl/UserBehaviorServiceImpl.class
 com/answerbook/service/DailyQuoteService.class
 com/answerbook/entity/Share.class
+com/answerbook/controller/MockController.class
+com/answerbook/config/SecurityConfig.class
 com/answerbook/service/impl/AuthServiceImpl.class
 com/answerbook/entity/DailyQuote.class
 com/answerbook/service/UserBehaviorService.class

@@ -2,7 +2,7 @@
 const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   __name: "index",
-  setup(__props) {
+  setup(__props, { expose: __expose }) {
     const isPageFlipped = common_vendor.ref(false);
     const answer = common_vendor.ref({
       id: null,
@@ -27,7 +27,10 @@ const _sfc_main = {
         { id: 7, content: "再等等看" },
         { id: 8, content: "相信你的直觉" },
         { id: 9, content: "现在不是时候" },
-        { id: 10, content: "放手去做" }
+        { id: 10, content: "放手去做" },
+        { id: 11, content: "不要犹豫" },
+        { id: 12, content: "相信你的直觉" },
+        { id: 13, content: "现在不是时候" }
       ];
       const randomIndex = Math.floor(Math.random() * answers.length);
       setTimeout(() => {
@@ -52,33 +55,41 @@ const _sfc_main = {
         duration: 2e3
       });
     };
-    onShareAppMessage(() => {
-      return {
-        title: `答案之书告诉我：${answer.value.content}`,
-        path: `/pages/index/index`,
-        imageUrl: "/static/images/share-image.png",
-        // 分享图片
-        success: function() {
-          common_vendor.index.showToast({
-            title: "分享成功",
-            icon: "success"
-          });
-        }
-      };
-    });
-    common_vendor.index.onShareTimeline(() => {
-      return {
-        title: `答案之书告诉我：${answer.value.content}`,
-        query: "",
-        imageUrl: "/static/images/share-image.png"
-      };
+    const goBack = () => {
+      common_vendor.index.navigateBack({
+        url: "/pages/index/index"
+      });
+    };
+    __expose({
+      onShareAppMessage() {
+        return {
+          title: `答案之书告诉我：${answer.value.content}`,
+          path: `/pages/index/index`,
+          imageUrl: "/static/images/share-image.png",
+          // 分享图片
+          success: function() {
+            common_vendor.index.showToast({
+              title: "分享成功",
+              icon: "success"
+            });
+          }
+        };
+      },
+      onShareTimeline() {
+        return {
+          title: `答案之书告诉我：${answer.value.content}`,
+          query: "",
+          imageUrl: "/static/images/share-image.png"
+        };
+      }
     });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.t(answer.value.content),
         b: common_vendor.o(tryAgain),
         c: common_vendor.o(shareAnswer),
-        d: isPageFlipped.value ? 1 : ""
+        d: isPageFlipped.value ? 1 : "",
+        e: common_vendor.o(goBack)
       };
     };
   }

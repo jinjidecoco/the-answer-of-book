@@ -19,6 +19,9 @@
         </view>
       </view>
     </view>
+    <view class="back-button" @click="goBack">
+      <text class="back-text">返回首页</text>
+    </view>
   </view>
 </template>
 
@@ -65,7 +68,10 @@ const fetchRandomAnswer = () => {
     { id: 7, content: '再等等看' },
     { id: 8, content: '相信你的直觉' },
     { id: 9, content: '现在不是时候' },
-    { id: 10, content: '放手去做' }
+    { id: 10, content: '放手去做' },
+    { id: 11, content: '不要犹豫' },
+    { id: 12, content: '相信你的直觉' },
+    { id: 13, content: '现在不是时候' }
   ];
 
   // 随机选择一条
@@ -123,29 +129,40 @@ const shareAnswer = () => {
   });
 };
 
-// 定义分享内容
-onShareAppMessage(() => {
-  return {
-    title: `答案之书告诉我：${answer.value.content}`,
-    path: `/pages/index/index`,
-    imageUrl: '/static/images/share-image.png', // 分享图片
-    success: function() {
-      uni.showToast({
-        title: '分享成功',
-        icon: 'success'
-      });
-    }
-  };
+// 返回首页
+const goBack = () => {
+
+  uni.navigateBack({
+    url: '/pages/index/index'
+  });
+};
+
+// 定义页面的分享行为 - 使用defineExpose导出生命周期函数
+defineExpose({
+  onShareAppMessage() {
+    return {
+      title: `答案之书告诉我：${answer.value.content}`,
+      path: `/pages/index/index`,
+      imageUrl: '/static/images/share-image.png', // 分享图片
+      success: function() {
+        uni.showToast({
+          title: '分享成功',
+          icon: 'success'
+        });
+      }
+    };
+  },
+  onShareTimeline() {
+    return {
+      title: `答案之书告诉我：${answer.value.content}`,
+      query: '',
+      imageUrl: '/static/images/share-image.png'
+    };
+  }
 });
 
-// 定义分享到朋友圈
-uni.onShareTimeline(() => {
-  return {
-    title: `答案之书告诉我：${answer.value.content}`,
-    query: '',
-    imageUrl: '/static/images/share-image.png'
-  };
-});
+// 不要在这里直接使用onShareAppMessage和onShareTimeline
+// 它们不是组合式API的一部分，应该通过defineExpose导出
 </script>
 
 <style>
@@ -246,8 +263,8 @@ uni.onShareTimeline(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .answer-text {
@@ -288,5 +305,18 @@ uni.onShareTimeline(() => {
 
 .share {
   background: linear-gradient(45deg, #f39c12, #e67e22);
+}
+
+.back-button {
+  margin-top: 40rpx;
+  padding: 15rpx 40rpx;
+  border-radius: 40rpx;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+}
+
+.back-text {
+  font-size: 28rpx;
+  color: white;
 }
 </style>

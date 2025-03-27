@@ -1,28 +1,58 @@
 version: '3.8'
 
 services:
+  # 后端API服务
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/answer_book?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+    restart: always
+    networks:
+      - answer-network
+
+  # MySQL数据库
   mysql:
     image: mysql:8.0
-    container_name: answer_book_mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: answer_book
     ports:
       - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=answer_book
+      - MYSQL_USER=answerbook
+      - MYSQL_PASSWORD=answerbook
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-
-  redis:
-    image: redis:6.2
-    container_name: answer_book_redis
     restart: always
+    networks:
+      - answer-network
+
+  # Redis缓存
+  redis:
+    image: redis:6.0-alpine
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data
+      - redis-data:/data
+    restart: always
+    networks:
+      - answer-network
 
 volumes:
-  mysql_data:
-  redis_data:
+  mysql-data:
+  redis-data:
+
+networks:
+  answer-network:
+    driver: bridge

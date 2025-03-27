@@ -90,8 +90,8 @@ to { transform: rotate(360deg);
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 .answer-text {
   font-size: 48rpx;
@@ -127,4 +127,16 @@ to { transform: rotate(360deg);
 }
 .share {
   background: linear-gradient(45deg, #f39c12, #e67e22);
+}
+.back-button {
+  margin-top: 40rpx;
+  padding: 15rpx 40rpx;
+  border-radius: 40rpx;
+  background: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+.back-text {
+  font-size: 28rpx;
+  color: white;
 }

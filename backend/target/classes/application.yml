@@ -1,6 +1,6 @@
 # 应用配置
 server:
-  port: 8080
+  port: 8088
   servlet:
     context-path: /api
 
@@ -8,21 +8,25 @@ spring:
   application:
     name: answer-book
 
-  # 数据库配置 - 使用H2内存数据库
+  # H2数据库配置
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:answer_book;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    url: jdbc:h2:mem:answerbook;MODE=MySQL;DATABASE_TO_LOWER=TRUE
     username: sa
     password:
-    initialization-mode: always
-    schema: classpath:db/migration/V1__init_tables.sql
-    data: classpath:db/migration/V1.2__Add_User_Behavior_And_Favorite_Tables.sql
 
-  # 启用H2控制台
+  # H2控制台配置
   h2:
     console:
       enabled: true
       path: /h2-console
+      settings:
+        web-allow-others: true
+
+  # 禁用SQL初始化
+  sql:
+    init:
+      mode: never
 
   # 禁用Redis
   autoconfigure:
@@ -30,32 +34,52 @@ spring:
       - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
 
-  # Flyway配置
+  # 禁用Flyway
   flyway:
-    enabled: false # 使用schema和data初始化
+    enabled: false
+
+  # JPA配置
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
 # MyBatis Plus配置
 mybatis-plus:
-  mapper-locations: classpath:mapper/**/*.xml
+  mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.answerbook.entity
   configuration:
     map-underscore-to-camel-case: true
+    cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: auto
-      logic-delete-field: deleted
-      logic-delete-value: 1
-      logic-not-delete-value: 0
+      table-underline: true
 
 # 日志配置
 logging:
   level:
     root: info
     com.answerbook: debug
+    org.springframework.jdbc.core: debug
 
 # JWT配置
 jwt:
-  secret: answerbook123456
-  expire: 7200
+  secret: answerbook-jwt-secret-key-2023
+  expiration: 86400000  # 24小时
   header: Authorization
+
+# SpringDoc配置
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+  packages-to-scan: com.answerbook.controller

@@ -3,11 +3,13 @@
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/mapper/DailyQuoteMapper.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/controller/AuthController.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/vo/LoginVO.java
+/Users/coco/job/answer/backend/src/main/java/com/answerbook/config/OpenApiConfig.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/entity/Favorite.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/vo/AnswerVO.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/service/impl/DailyQuoteServiceImpl.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/service/impl/AuthServiceImpl.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/vo/DailyQuoteVO.java
+/Users/coco/job/answer/backend/src/main/java/com/answerbook/config/SecurityConfig.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/entity/UserBehavior.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/entity/Share.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/service/impl/FavoriteServiceImpl.java
@@ -15,10 +17,12 @@
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/controller/UserBehaviorController.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/entity/User.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/mapper/UserMapper.java
+/Users/coco/job/answer/backend/src/main/java/com/answerbook/controller/MockController.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/controller/FavoriteController.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/service/impl/AnswerServiceImpl.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/service/DailyQuoteService.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/entity/Answer.java
+/Users/coco/job/answer/backend/src/main/java/com/answerbook/vo/QuoteVO.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/service/AnswerService.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/controller/DailyQuoteController.java
 /Users/coco/job/answer/backend/src/main/java/com/answerbook/mapper/UserBehaviorMapper.java

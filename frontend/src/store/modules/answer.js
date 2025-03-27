@@ -48,7 +48,10 @@ export const useAnswerStore = defineStore('answer', {
           { id: 7, content: '再等等看' },
           { id: 8, content: '相信你的直觉' },
           { id: 9, content: '现在不是时候' },
-          { id: 10, content: '放手去做' }
+          { id: 10, content: '放手去做' },
+          { id: 11, content: '不要犹豫' },
+          { id: 12, content: '相信你的直觉' },
+          { id: 13, content: '现在不是时候' }
         ];
 
         // 随机选择一条

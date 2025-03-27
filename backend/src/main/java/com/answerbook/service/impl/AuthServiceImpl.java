@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
     private final JwtUtil jwtUtil;
 
-    @Value("${jwt.expire}")
+    @Value("${jwt.expiration}")
     private Integer expireSeconds;
 
     @Override

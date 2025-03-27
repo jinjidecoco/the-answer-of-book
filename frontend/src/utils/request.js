@@ -4,7 +4,7 @@
  */
 
 // API基础URL
-const BASE_URL = 'https://api.answerbook.example.com/v1';
+const BASE_URL = 'http://localhost:8088/api';
 
 // 请求超时时间
 const TIMEOUT = 10000;
